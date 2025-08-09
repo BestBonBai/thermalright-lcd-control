@@ -171,6 +171,18 @@ class DisplayDevice04165302(DisplayDevice):
         )
         return prefix + body
 
+class DisplayDevice087ad070db(DisplayDevice):
+    def __init__(self, config_dir: str):
+        super().__init__(0x0418, 0x5303, 64, 320, 320, config_dir)
+
+    def get_header(self) -> bytes:
+        return struct.pack('<BBHHH',
+                           0x69,
+                           0x88,
+                           320,
+                           320,
+                           0
+                           )
 
 def load_device(config_dir: str) -> Optional[DisplayDevice]:
     try:
@@ -185,5 +197,8 @@ def load_device(config_dir: str) -> Optional[DisplayDevice]:
                     return DisplayDevice04185303(config_dir)
                 elif device['product_id'] == 0x5304:
                     return DisplayDevice04185304(config_dir)
+            elif device['vendor_id'] == 0x87ad:
+                if device['product_id'] == 0x70db:
+                    return DisplayDevice087ad070db(config_dir)
     except Exception as e:
         raise Exception(f"No supported device found: {e}") from e

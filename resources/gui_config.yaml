@@ -37,3 +37,8 @@ supported_devices:
     pid: "0x5304"
     width: 480
     height: 480
+
+  - vid: "0x87ad"
+    pid: "0x70db"
+    width: 320
+    height: 320
